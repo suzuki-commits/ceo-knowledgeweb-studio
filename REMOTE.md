@@ -57,7 +57,7 @@ http://localhost:8830/local/access
 ## セキュリティ境界
 
 - 許可Hostは `ceo-knowledgeweb.autopilot-note.com`、`localhost:8830`、`127.0.0.1:8830` のみです。
-- ログインと更新系リクエストは正しいOriginを必須とします。
+- ログインと更新系リクエストは正しいOriginを必須とします。Referrer-Policyは同一オリジン内だけ送信元情報を扱う `same-origin` とし、フォーム送信のOrigin検証を維持します。
 - 認証前のAPI・outputs・ZIPは401で、upstreamへ転送しません。
 - cookieはHttpOnly、SameSite=Lax、Path=/です。外部hostではSecureも必須です。
 - loginはscryptとtiming-safe比較を使い、IP単位と全体の失敗回数を15分窓で制限します。
