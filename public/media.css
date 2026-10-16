@@ -1,0 +1,10 @@
+.photo-list{display:grid;gap:10px;margin-top:12px}
+.photo-item{display:grid;grid-template-columns:72px minmax(0,1fr) 34px;gap:12px;align-items:center;padding:10px;border:1px solid var(--line);background:var(--paper)}
+.photo-item img{width:72px;height:72px;object-fit:cover;background:#eaf0f7}
+.photo-item>div{display:grid;gap:4px;min-width:0}
+.photo-item b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}
+.photo-item small,.upload-help{color:var(--muted);font-size:10px;line-height:1.55}
+.photo-item label{display:flex;align-items:center;gap:8px}.photo-item label span{font-size:10px;color:var(--muted)}
+.photo-item select{max-width:120px;padding:5px;border:1px solid var(--line);background:#fff}.photo-item button{border:0;background:transparent;font-size:20px;cursor:pointer}.upload-help{margin:10px 0 0}
+@media(max-width:380px){.photo-item{grid-template-columns:58px minmax(0,1fr) 30px}.photo-item img{width:58px;height:68px}.photo-item label{align-items:flex-start;flex-direction:column;gap:3px}.photo-item select{width:100%;max-width:none}}
+.remote-logout{border:1px solid var(--line);background:#fff;padding:8px 12px;font-size:11px;cursor:pointer}.remote-logout:hover{border-color:var(--blue);color:var(--blue)}.remote-logout:disabled{opacity:.5}

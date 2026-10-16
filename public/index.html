@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>CEO SITE STUDIO｜5つの公式サイト案をつくる</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/media.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="CEO SITE STUDIO ホーム"><span class="brand-mark">CS</span><span><b>CEO SITE STUDIO</b><small>by COMIX</small></span></a>
+    <div class="service-state"><span class="state-dot" id="healthDot"></span><span id="healthText">生成環境を確認中</span></div>
+  </header>
+
+  <main class="workspace">
+    <section class="brief-panel" aria-labelledby="briefTitle">
+      <div class="section-index">BRIEF / 01</div>
+      <h1 id="briefTitle"><span>その人らしさを、</span><span><em>5つの入口</em>に。</span></h1>
+      <p class="intro">公開情報と資料を読み、公式サイト5案と比較できるWeb提案書をひとつの案件にまとめます。</p>
+
+      <form id="briefForm" novalidate>
+        <div class="field-grid two">
+          <label><span>氏名（分かる場合）</span><input name="personName" maxlength="80" autocomplete="name" placeholder="例：青山 遥"></label>
+          <label><span>会社名</span><input name="company" maxlength="120" autocomplete="organization" placeholder="例：株式会社〇〇"></label>
+        </div>
+        <label><span>肩書</span><input name="title" maxlength="120" autocomplete="organization-title" placeholder="例：代表取締役"></label>
+
+        <fieldset class="url-fieldset">
+          <legend>自己紹介・参考URL <small>最大5件</small></legend>
+          <div id="urlList" class="url-list"></div>
+          <button class="text-button" type="button" id="addUrl">＋ URLを追加</button>
+        </fieldset>
+
+        <label><span>補足・伝えたいこと</span><textarea name="notes" maxlength="6000" rows="5" placeholder="経歴、活動、サイトで大切にしたい印象など。確認できる事実を入力してください。"></textarea><small class="counter" id="notesCount">0 / 6,000</small></label>
+
+        <fieldset class="upload-fieldset">
+          <legend>参考PDF <small>最大3件・各8MB</small></legend>
+          <label class="dropzone" for="pdfInput"><input id="pdfInput" type="file" accept="application/pdf,.pdf" multiple><span class="upload-icon">＋</span><b>PDFを選ぶ</b><small>会社案内、プロフィール、登壇資料など</small></label>
+          <div id="fileList" class="file-list"></div>
+        </fieldset>
+
+        <fieldset class="upload-fieldset photo-fieldset">
+          <legend>サイトに使う写真 <small>最大5枚・各4MB</small></legend>
+          <label class="dropzone" for="photoInput"><input id="photoInput" type="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" multiple><span class="upload-icon">＋</span><b>写真を選ぶ</b><small>顔写真、仕事、交流、スポーツなど。JPEG / PNG / WebP</small></label>
+          <div id="photoList" class="photo-list"></div>
+          <p class="upload-help">Facebookなどログインが必要な写真は自動取得しません。使いたい写真をここから追加してください。</p>
+        </fieldset>
+
+        <p class="data-note">URLのHTML・テキストと添付PDFは生成時にCodexへ送られます。写真はローカル出力に保存してサイトへ配置し、画像URLをAIに作らせません。生成にはご利用中のCodex利用枠を使います。</p>
+        <div id="formError" class="form-error" role="alert" hidden></div>
+        <button class="primary-button" id="generateButton" type="submit"><span>5案と提案書を生成</span><span aria-hidden="true">→</span></button>
+        <button class="demo-button" id="demoButton" type="button">架空デモを試す <small>AI生成を使わず、操作を確認</small></button>
+      </form>
+    </section>
+
+    <section class="result-panel" aria-labelledby="resultTitle">
+      <div class="result-head">
+        <div><div class="section-index">OUTPUT / 02</div><h2 id="resultTitle">制作プレビュー</h2></div>
+        <div class="view-toggle" aria-label="プレビュー幅"><button data-width="desktop" class="active" type="button">PC</button><button data-width="mobile" type="button">スマホ</button></div>
+      </div>
+
+      <div id="emptyState" class="empty-state">
+        <div class="concept-stack" aria-hidden="true"><i>05</i><i>04</i><i>03</i><i>02</i><i>01</i></div>
+        <div><b>提案書と5つのサイト案が<br>ここに並びます。</b><p>まず左の情報を入力してください。生成後も案件履歴から開き直せます。</p></div>
+      </div>
+
+      <div id="progressState" class="progress-state" hidden>
+        <div class="progress-orbit"><span id="progressNumber">1</span><small>/ 5</small></div>
+        <div><span class="eyebrow">NOW BUILDING</span><h3 id="progressStage">資料を受け取りました</h3><p id="progressHelp">事実を整理し、人物像と5つの表現方向を組み立てています。</p></div>
+        <div class="progress-track"><i id="progressBar"></i></div><small class="progress-caption">工程目安（処理時間や生成量を示す数値ではありません）</small>
+      </div>
+
+      <div id="viewerState" class="viewer-state" hidden>
+        <div class="viewer-toolbar">
+          <div class="output-tabs" id="outputTabs"></div>
+          <div class="viewer-actions"><a id="openOutput" target="_blank" rel="noopener">別タブで開く ↗</a><a id="downloadOutput" class="download-link">ZIP</a></div>
+        </div>
+        <div class="device-frame" id="deviceFrame"><iframe id="outputFrame" title="生成結果のプレビュー"></iframe></div>
+      </div>
+
+      <section class="history" aria-labelledby="historyTitle">
+        <div class="history-head"><h3 id="historyTitle">作成済み案件</h3><button id="refreshJobs" type="button">更新</button></div>
+        <div id="jobList" class="job-list"><p class="history-empty">案件を読み込んでいます。</p></div>
+      </section>
+    </section>
+  </main>
+  <footer><span>CEO SITE STUDIO</span><span>人物の事実を起点に、選べる表現へ。</span></footer>
+  <script src="/app.js" defer></script>
+</body>
+</html>
